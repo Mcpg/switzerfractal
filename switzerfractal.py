@@ -31,22 +31,22 @@ img = Image.new("RGB", (flag_width, flag_width))
 background_color = (255, 0, 0)
 foreground_color = (255, 255, 255)
 
+normalized_square_size = 6/32
+
 # Normalized coordinates of all the sub-squares, ie. targets of next flags
 # TODO: fix them cause they're fucked up and not accurate lmao
 sub_squares = [
-    (6/32, 13/32),  # left
-    (13/32, 6/32),  # top
-    (19/32, 13/32), # right
-    (13/32, 19/32), # bottom
-    (13/32, 13/32), # center
+    (9.5/32 - normalized_square_size/2, 1/2 - normalized_square_size/2),  # left
+    (1/2 - normalized_square_size/2, 9.5/32 - normalized_square_size/2),  # top
+    (22.5/32 - normalized_square_size/2, 1/2 - normalized_square_size/2), # right
+    (1/2 - normalized_square_size/2, 22.5/32 - normalized_square_size/2), # bottom
+    (1/2 - normalized_square_size/2, 1/2 - normalized_square_size/2),     # center
 ]
 
 stripes = [
     [(6/32, 13/32), (26/32, 19/32)],
     [(13/32, 6/32), (19/32, 26/32)]
 ]
-
-normalized_square_size = 6/32
 
 expected_passes = 0
 for i in range(max_depth + 1):
@@ -67,6 +67,9 @@ def rectangle(x1, y1, x2, y2, color):
 def switzerfractal(x, y, w, h, depth, invert_colors=False):
     
     global passes_done_count
+    
+    if w == 0 or h == 0:
+        return
     
     print("Pass %d/%d (%d,%d) (%d,%d) depth %d" % (passes_done_count, expected_passes, x, y, w, h, depth)) 
     passes_done_count += 1
